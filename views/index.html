@@ -2,16 +2,35 @@
 <html ng-app="angularjsNodejsTutorial">
     <head>
         <title>Integrating AngularJS with NodeJS</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular.js"></script>
         <script src="javascripts/app.js" type="text/javascript"></script> <!-- not created yet -->
         <script src="javascripts/moment.min.js" type="text/javascript"></script>
         <script src="javascripts/angular-moment.min.js" type="text/javascript"></script>
+        
     </head>
     <body >
         <div ng-controller="myController">
-                <ul ng-repeat="item in data">
-                        <li>Name: {{item.BuldStatus}}</li>
-                    </ul>
+            <div class="container ">
+                <table class="table table-bordered table-striped table-hover">
+                  <tr>
+                      <th>Service Name</th>
+                      <th>Builds Count</th>
+                      <th>Builds MTTR</th>
+                      <!-- <th>Product Quantity</th> -->
+                  </tr>
+                  <!-- <tr class="info" ng-repeat="item in AllBuildsData.BuildDetails"> -->
+                    <tr class="info">
+                      <td ng-style="style1">CartMs</td>
+                      <td>{{AllBuildsData.BuildDetails.length}}</td>
+                      <td>{{AllBuildsData.MTTR}}</td>
+                  </tr>
+                  
+                </table>
+                </div><br /><br />
+                
         </div>
     </body>
 </html>

@@ -5,6 +5,7 @@ var path = require('path');
 var moment = require('moment');
 var sampleObject = [];
 var AllDates = [];
+var buildCount = -1;
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -93,35 +94,43 @@ router.get('/builds', function(req,res,next){
   };
   res.send(resObject);
 });
-router.get('/all', function(req,res,next){
+router.get('/buildnow', function(req,res,next){
   var todayBuilds = [];
-  var time1 = '';
-  var time2 = '';
-  function getTodayBuilds(t1,t2,tsec){
-    var currentDateTime = t2;
-  var diffSeconds = tsec
-  console.log("diffSeconds : ",diffSeconds);
-  var currentDateTimeAdded = t1;
-  console.log('currentDateTimeAdded is : ',currentDateTimeAdded);
-  var BuildStatus = (diffSeconds%2 === 0)?"Success":"Failure";
-  var resObject = {
-    "BuildStatus":BuildStatus,
-    "BuildStartTime":currentDateTimeAdded,
-    "BuildEndTime":currentDateTime
-  };
-  todayBuilds.push(resObject);
-  time2 = moment.duration(t2).add(180000,'second').valueOf();
-  }
-  for(var i=0;i<=100;i++){
-    //time2 = new Date("06-13-2018 12:15").setMinutes(3);
-    time2 = moment().valueOf();
-    console.log("moment().valueOf() is : ",moment("06-13-2018 12:15").valueOf());
-    var diffmins = time2 % 100;
-    time1 = moment.duration(time2).subtract(diffmins,'second').valueOf();
-    console.log("Time1 : ",time1);
-    console.log("time2 ",time2);
-    getTodayBuilds(time1,time2,diffmins);
-  }
-  res.send(todayBuilds);
+        var time1 = '';
+        var time2 = '';
+        var resObject = '';
+        function getTodayBuilds(t1, t2, tsec) {
+            var currentDateTime = t2;
+            var diffSeconds = tsec;
+            console.log("diffSeconds : ", diffSeconds);
+            var currentDateTimeAdded = t1;
+            console.log('currentDateTimeAdded is : ', currentDateTimeAdded);
+            var BuildStatus = (diffSeconds % 2 === 0) ? "Success" : "Failure";
+            buildCount = buildCount+1;
+            resObject = {
+                "BuildStatus": BuildStatus,
+                "BuildStartTime": currentDateTimeAdded,
+                "BuildEndTime": currentDateTime,
+                "BuildNumber": buildCount
+            };
+            todayBuilds.push(resObject);
+           //time2 = moment.duration(t2).add(180000, 'second').valueOf();
+        }
+        for (var i = 0; i <= 0; i++) {
+            //time2 = moment().subtract(1,'day').valueOf();
+            //time2 = moment(new Date("06-14-2018 12:15")).valueOf();
+            time2 = moment().valueOf();
+            console.log("In testingMethod() : time2 is ",time2);
+            //time2 = moment().valueOf();
+            //console.log("moment().valueOf() is : ",moment("06-13-2018 12:15").valueOf());
+            var diffmins = time2 % 100;
+            console.log("diffmins is : ",diffmins);
+            time1 = moment(time2).subtract(diffmins, 'second').valueOf();
+            console.log("Time1 : ", time1);
+            console.log("time2 ", time2);
+            getTodayBuilds(time1, time2, diffmins);
+        }
+  //res.send(todayBuilds);
+  res.send(resObject);
 });
 module.exports = router;
